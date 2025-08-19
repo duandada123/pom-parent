@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "sz.web",
+      "type": "com.sinogale.web.config.SwaggerProperties",
+      "sourceType": "com.sinogale.web.config.SwaggerProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "sz.web.enable",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.sinogale.web.config.SwaggerProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "sz.web.base-package",
+      "type": "java.lang.String",
+      "sourceType": "com.sinogale.web.config.SwaggerProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "sz.web.description",
+      "type": "java.lang.String",
+      "sourceType": "com.sinogale.web.config.SwaggerProperties",
+      "defaultValue": "description"
+    },
+    {
+      "name": "sz.web.title",
+      "type": "java.lang.String",
+      "sourceType": "com.sinogale.web.config.SwaggerProperties",
+      "defaultValue": "title"
+    },
+    {
+      "name": "sz.web.version",
+      "type": "java.lang.String",
+      "sourceType": "com.sinogale.web.config.SwaggerProperties",
+      "defaultValue": "version 1.0.0"
+    }
+  ],
+  "hints": []
+}

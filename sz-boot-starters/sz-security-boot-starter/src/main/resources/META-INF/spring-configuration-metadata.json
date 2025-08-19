@@ -1,0 +1,48 @@
+{
+  "groups": [
+    {
+      "name": "sz.security",
+      "type": "com.sinogale.security.config.LoginConfigProperties",
+      "sourceType": "com.sinogale.security.config.LoginConfigProperties"
+    },
+    {
+      "name": "sz.security.token.expired",
+      "type": "com.sinogale.security.base.SystemExpiredProperties",
+      "sourceType": "com.sinogale.security.base.SystemExpiredProperties"
+    },
+    {
+      "name": "sz.security.urls",
+      "type": "com.sinogale.security.config.LoginUrlProperties",
+      "sourceType": "com.sinogale.security.config.LoginUrlProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "sz.security.expired",
+      "type": "java.lang.Long",
+      "sourceType": "com.sinogale.security.config.LoginConfigProperties"
+    },
+    {
+      "name": "sz.security.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.sinogale.security.config.LoginConfigProperties"
+    },
+    {
+      "name": "sz.security.token.expired.admin-sys-hours",
+      "type": "java.lang.Integer",
+      "sourceType": "com.sinogale.security.base.SystemExpiredProperties",
+      "defaultValue": 24
+    },
+    {
+      "name": "sz.security.urls.admin-pass-url",
+      "type": "java.lang.String",
+      "sourceType": "com.sinogale.security.config.LoginUrlProperties"
+    },
+    {
+      "name": "sz.security.urls.un-auth-urls",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.sinogale.security.config.LoginUrlProperties"
+    }
+  ],
+  "hints": []
+}

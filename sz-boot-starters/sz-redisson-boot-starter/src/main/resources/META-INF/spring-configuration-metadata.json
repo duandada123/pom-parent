@@ -1,0 +1,39 @@
+{
+  "groups": [
+    {
+      "name": "redisson",
+      "type": "com.sinogale.redisson.config.RedissonProperties",
+      "sourceType": "com.sinogale.redisson.config.RedissonProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "redisson.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.sinogale.redisson.config.RedissonProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "redisson.mode",
+      "type": "java.lang.String",
+      "sourceType": "com.sinogale.redisson.config.RedissonProperties",
+      "defaultValue": "single"
+    },
+    {
+      "name": "redisson.nodes",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.sinogale.redisson.config.RedissonProperties"
+    },
+    {
+      "name": "redisson.password",
+      "type": "java.lang.String",
+      "sourceType": "com.sinogale.redisson.config.RedissonProperties"
+    },
+    {
+      "name": "redisson.pingConnectionInterval",
+      "type": "java.lang.Integer",
+      "sourceType": "com.sinogale.redisson.config.RedissonProperties"
+    }
+  ],
+  "hints": []
+}
