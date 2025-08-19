@@ -1,0 +1,7 @@
+com.sinogale.codegen.dto.GenDtoProcessor
+com.sinogale.codegen.mapper.GenMapperProcessor
+com.sinogale.codegen.query.GenQueryProcessor
+com.sinogale.codegen.vo.GenVoProcessor
+com.sinogale.codegen.updater.GenUpdaterProcessor
+
+
