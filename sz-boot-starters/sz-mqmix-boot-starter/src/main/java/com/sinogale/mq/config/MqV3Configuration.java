@@ -2,6 +2,8 @@ package com.sinogale.mq.config;
 
 import com.aliyun.openservices.ons.api.bean.OrderProducerBean;
 import com.aliyun.openservices.ons.api.bean.ProducerBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,6 +27,8 @@ import java.util.Properties;
 )
 public class MqV3Configuration {
 
+    private static final Logger log = LoggerFactory.getLogger(MqV3Configuration.class);
+
     @Autowired
     private MqProperties mqProperties;
 
@@ -37,7 +41,7 @@ public class MqV3Configuration {
     public ProducerBean v3Producer() {
         ProducerBean producer = new ProducerBean();
         producer.setProperties(this.getMqProperties());
-        System.out.println("V3 producer loaded");
+        log.info("V3 producer loaded");
         return producer;
     }
 

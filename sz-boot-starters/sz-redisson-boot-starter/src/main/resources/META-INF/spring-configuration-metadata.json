@@ -22,7 +22,8 @@
     {
       "name": "redisson.nodes",
       "type": "java.util.List<java.lang.String>",
-      "sourceType": "com.sinogale.redisson.config.RedissonProperties"
+      "sourceType": "com.sinogale.redisson.config.RedissonProperties",
+      "description": "Redis node addresses in host:port format; 'redis://' will be prefixed automatically when missing."
     },
     {
       "name": "redisson.password",

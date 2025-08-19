@@ -6,6 +6,8 @@ package com.sinogale.web.config;
  * @Date 2022/4/3 20:43
  **/
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,8 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 @Configuration
 @ImportAutoConfiguration({SwaggerPlusConfiguration.class, CustomMvcConfiguration.class})
 public class CustomWebAutoConfiguration {
+
+    private static final Logger log = LoggerFactory.getLogger(CustomWebAutoConfiguration.class);
 
     @Bean
     public CommonsRequestLoggingFilter logFilter() {
@@ -31,7 +35,7 @@ public class CustomWebAutoConfiguration {
     @Bean
     public CommandLineRunner webRunner(){
         return (args) -> {
-            System.out.println("==== swagger2 loaded ====");
+            log.info("==== swagger2 loaded ====");
         };
     }
 }

@@ -1,8 +1,11 @@
 package com.sinogale.redisson.config;
 
+import lombok.extern.log4j.Log4j2;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -11,9 +14,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableConfigurationProperties({RedissonProperties.class})
@@ -29,6 +32,8 @@ public class RedissonAutoConfiguration {
 
     public static final String MODE_CLUSTER = "cluster";
 
+    private static final Logger log = LoggerFactory.getLogger(RedissonAutoConfiguration.class);
+
     @Bean(
             destroyMethod = "shutdown"
     )
@@ -40,11 +45,7 @@ public class RedissonAutoConfiguration {
             config.useSingleServer().setAddress(nodes.get(0)).setPassword(redisProperties.getPassword())
                     .setPingConnectionInterval(redisProperties.getPingConnectionInterval());
         } else {
-            config.useClusterServers().addNodeAddress((nodes.stream().map(s -> {
-                return "redis://" + s;
-            })
-                    .collect(Collectors.toList()))
-                    .toArray(new String[nodes.size()])).setPingConnectionInterval(redisProperties.getPingConnectionInterval())
+            config.useClusterServers().addNodeAddress(Arrays.toString(nodes.stream().map(s -> "redis://" + s).toArray(Object[]::new))).setPingConnectionInterval(redisProperties.getPingConnectionInterval())
                     .setPassword(redisProperties.getPassword());
         }
         return Redisson.create(config);
@@ -53,7 +54,7 @@ public class RedissonAutoConfiguration {
     @Bean
     public CommandLineRunner redisRunner() {
         return (args) -> {
-            System.out.println("==== redis loaded ===");
+            log.info("==== redis loaded ===");
         };
     }
 }

@@ -32,8 +32,8 @@ public class AbstractBaseJpaVo {
     protected AbstractBaseJpaVo(BaseJpaAggregate source) {
         this.setVersion(source.getVersion());
         this.setId(source.getId());
-        this.setCreatedAt(source.getCreatedAt().toEpochMilli());
-        this.setUpdatedAt(source.getUpdatedAt().toEpochMilli());
+        this.setCreatedAt(source.getCreatedAt() == null ? null : source.getCreatedAt().toEpochMilli());
+        this.setUpdatedAt(source.getUpdatedAt() == null ? null : source.getUpdatedAt().toEpochMilli());
     }
 
 

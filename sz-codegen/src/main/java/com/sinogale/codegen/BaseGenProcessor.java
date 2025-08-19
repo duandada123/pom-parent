@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 public abstract class BaseGenProcessor<T extends Annotation> extends AbstractProcessor
 {
-    protected final Class processAnnotation;
+    protected final Class<T> processAnnotation;
     protected Filer filer;
     protected Messager messager;
     protected Types types;
@@ -59,7 +59,7 @@ public abstract class BaseGenProcessor<T extends Annotation> extends AbstractPro
 
     @Override
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
-        final Set<Element> annotatedClass = (Set<Element>)roundEnv.getElementsAnnotatedWith(this.processAnnotation);
+        final Set<? extends Element> annotatedClass = roundEnv.getElementsAnnotatedWith(this.processAnnotation);
         for (final TypeElement e : ElementFilter.typesIn(annotatedClass)) {
             this.genCode(e, roundEnv);
         }
@@ -67,8 +67,7 @@ public abstract class BaseGenProcessor<T extends Annotation> extends AbstractPro
     }
 
     public Set<VariableElement> filterFields(final List<? extends Element> elements, final Predicate<Element> predicate) {
-        final Set<VariableElement> variableElements = ElementFilter.fieldsIn(elements).stream().filter(predicate).collect(Collectors.toSet());
-        return variableElements;
+        return ElementFilter.fieldsIn(elements).stream().filter(predicate).collect(Collectors.toSet());
     }
 
     public void genJavaFile(final String packageName, final String pathStr, final TypeSpec.Builder typeSpecBuilder, final boolean override) {

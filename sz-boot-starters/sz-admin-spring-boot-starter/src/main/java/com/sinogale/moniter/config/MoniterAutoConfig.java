@@ -1,5 +1,7 @@
 package com.sinogale.moniter.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +14,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MoniterAutoConfig {
 
+    private static final Logger log = LoggerFactory.getLogger(MoniterAutoConfig.class);
+
     @Bean
     public CommandLineRunner nacosLogger() {
         return (args) -> {
-            System.out.println("==== SZKJ admin loaded  ^ __ ^====");
+            log.info("==== SZKJ admin loaded  ^ __ ^====");
         };
     }
 }
