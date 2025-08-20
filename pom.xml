@@ -45,6 +45,7 @@
         <module>sz-boot-starters</module>
         <module>sz-codegen</module>
         <module>sz-commons</module>
+        <module>library-service</module>
     </modules>
     <!--  <repositories>-->
     <!--    <repository>-->
