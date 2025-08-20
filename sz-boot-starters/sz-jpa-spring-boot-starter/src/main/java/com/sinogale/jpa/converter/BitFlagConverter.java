@@ -5,6 +5,7 @@ package com.sinogale.jpa.converter;
 import com.sinogale.common.constants.BitFlag;
 
 import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 
 public class BitFlagConverter implements AttributeConverter<BitFlag, Integer> {
 

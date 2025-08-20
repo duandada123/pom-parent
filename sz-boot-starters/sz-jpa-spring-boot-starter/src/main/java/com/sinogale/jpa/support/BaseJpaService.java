@@ -43,7 +43,7 @@ public abstract class BaseJpaService {
     private <T> void doValidate(T t, Class<? extends ValidateGroup> group) {
         Set<ConstraintViolation<T>> constraintViolations = VALIDATOR.validate(t, new Class[]{group, Default.class});
         if (!CollectionUtils.isEmpty(constraintViolations)) {
-            List<ValidateResult> results = (List)constraintViolations.stream().map((cv) -> {
+            List<ValidateResult> results = constraintViolations.stream().map((cv) -> {
                 return new ValidateResult(cv.getPropertyPath().toString(), cv.getMessage());
             }).collect(Collectors.toList());
             throw new ValidationException(results);
@@ -61,9 +61,7 @@ public abstract class BaseJpaService {
             this.repository = repository;
         }
 
-        private Consumer<? super Throwable> errorCallback = (e) -> {
-            e.printStackTrace();
-        };
+        private Consumer<? super Throwable> errorCallback = Throwable::printStackTrace;
 
         public Creator<T,ID> create(Supplier<T> supplier){
             this.t = supplier.get();
@@ -128,7 +126,7 @@ public abstract class BaseJpaService {
             return this;
         }
 
-        public Updater<T, ID> sucCallback(Consumer<T> consumer) {
+        public Updater<T, ID> successCallback(Consumer<T> consumer) {
             this.successCallback = consumer;
             return this;
         }
