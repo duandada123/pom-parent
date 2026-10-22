@@ -5,7 +5,7 @@ package com.sinogale.web.config;
  * @Author duanchao
  * @Date 2022/4/3 20:44
  **/
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import com.github.xiaoymin.knife4j.spring.annotations.EnableSwaggerBootstrapUi;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -34,7 +34,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
         havingValue = "true"
 )
 @EnableConfigurationProperties({SwaggerProperties.class})
-@EnableKnife4j
+@EnableSwaggerBootstrapUi
 @ConditionalOnWebApplication
 @Import({BeanValidatorPluginsConfiguration.class})
 public class SwaggerPlusConfiguration {
