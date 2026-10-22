@@ -1,0 +1,19 @@
+{
+  "groups": [
+    {
+      "name": "dwsdk",
+      "type": "com.sinogale.dwsdk.config.DwSdkProperties",
+      "sourceType": "com.sinogale.dwsdk.config.DwSdkProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "dwsdk.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.sinogale.dwsdk.config.DwSdkProperties",
+      "description": "Whether DW SDK scene auto-configuration is enabled.",
+      "defaultValue": true
+    }
+  ],
+  "hints": []
+}

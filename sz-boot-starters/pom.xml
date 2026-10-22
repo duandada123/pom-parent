@@ -15,6 +15,7 @@
         <module>sz-jpa-spring-boot-starter</module>
         <module>sz-legacy-security-spring-boot-starter</module>
         <module>sz-mqmix-boot-starter</module>
+        <module>sz-dwsdk-boot-starter</module>
         <module>sz-redisson-boot-starter</module>
         <module>sz-security-boot-starter</module>
         <module>sz-web-spring-boot-starter</module>
