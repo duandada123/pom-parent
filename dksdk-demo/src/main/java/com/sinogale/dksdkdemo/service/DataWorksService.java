@@ -64,9 +64,12 @@ public class DataWorksService {
         if (deployment.getStatus() == null) throw new DataWorksException(502,
                 "INVALID_UPSTREAM_RESPONSE", "发布包缺少 status", body.getRequestId());
         DeployScriptResponse result = new DeployScriptResponse();
-        result.setFileId(request.getFileId()); result.setDeploymentId(request.getDeploymentId());
-        result.setStatus(deployment.getStatus()); result.setCheckingStatus(deployment.getCheckingStatus());
-        result.setToEnvironment(deployment.getToEnvironment()); result.setRequestId(body.getRequestId());
+        result.setFileId(request.getFileId());
+        result.setDeploymentId(request.getDeploymentId());
+        result.setStatus(deployment.getStatus());
+        result.setCheckingStatus(deployment.getCheckingStatus());
+        result.setToEnvironment(deployment.getToEnvironment());
+        result.setRequestId(body.getRequestId());
 
         if (request.isCheckOnly()) {
             result.setState("STATUS_ONLY");
@@ -78,11 +81,14 @@ public class DataWorksService {
                     "发布前必须提供提交到开发环境的 deploymentId；生产发布包请使用 checkOnly 查询", body.getRequestId());
         }
         if (Integer.valueOf(2).equals(deployment.getStatus())) {
-            result.setState("SUBMIT_FAILED"); result.setMessage("提交失败，请查看 DataWorks 发布包详情");
+            result.setState("SUBMIT_FAILED");
+            result.setMessage("提交失败，请查看 DataWorks 发布包详情");
         } else if (Integer.valueOf(7).equals(deployment.getCheckingStatus())) {
-            result.setState("CHECK_FAILED"); result.setMessage("发布前检查未通过");
+            result.setState("CHECK_FAILED");
+            result.setMessage("发布前检查未通过");
         } else if (!Integer.valueOf(1).equals(deployment.getStatus()) || deployment.getCheckingStatus() != null) {
-            result.setState("WAITING"); result.setMessage("提交或发布前检查尚未完成，请稍后再次调用");
+            result.setState("WAITING");
+            result.setMessage("提交或发布前检查尚未完成，请稍后再次调用");
         } else {
             // 就绪包可能尚无文件明细；只在实际写入前校验文件归属。
             if (body.getData().getDeployedItems() == null || body.getData().getDeployedItems().stream()

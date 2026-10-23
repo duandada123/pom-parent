@@ -26,7 +26,8 @@ public class DataWorksLogService {
             InstanceLogResponse log = new InstanceLogResponse();
             log.setInstanceId(request.getInstanceId()); log.setRunNumber(request.getRunNumber());
             attachLog(log); // 单实例失败直接返回 HTTP 错误。
-            result.getLogs().add(log); result.setTotalCount(1);
+            result.getLogs().add(log);
+            result.setTotalCount(1);
             return result;
         }
         long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(60);

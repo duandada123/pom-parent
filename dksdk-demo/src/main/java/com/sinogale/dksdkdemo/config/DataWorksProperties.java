@@ -17,7 +17,7 @@ public class DataWorksProperties {
 
     private String endpoint = "";
 
-    private String regionId = "cn-hangzhou";
+    private String regionId = "default";
 
     private Long projectId;
 
