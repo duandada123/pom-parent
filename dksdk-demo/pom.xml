@@ -45,9 +45,9 @@
             <version>2.1.14.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>alibabacloud-dataworks_public20240518</artifactId>
-            <version>9.0.11</version>
+            <groupId>com.aliyun.dataworks</groupId>
+            <artifactId>dataworks_public_20240902</artifactId>
+            <version>4.2.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

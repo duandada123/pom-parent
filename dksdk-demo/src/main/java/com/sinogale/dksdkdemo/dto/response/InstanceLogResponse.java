@@ -14,13 +14,13 @@ public class InstanceLogResponse {
     @ApiModelProperty(value = "任务实例 ID", example = "9000001")
     private Long instanceId;
 
-    @ApiModelProperty(value = "调度任务 ID", example = "2000001")
+    @ApiModelProperty(value = "调度节点 ID（兼容字段名 taskId）", example = "2000001")
     private Long taskId;
 
     @ApiModelProperty(value = "调度任务名称", example = "python_demo")
     private String taskName;
 
-    @ApiModelProperty(value = "实例运行次数，从 1 开始；请求时仅用于 instanceId 查询，不传取最近一次", example = "1")
+    @ApiModelProperty(value = "实例重跑次数；20240902 SDK 查询日志时不支持按该值筛选", example = "1")
     private Integer runNumber;
 
     @ApiModelProperty(value = "实例运行状态", example = "Success")

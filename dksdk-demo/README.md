@@ -258,6 +258,40 @@ complete 表示本次返回的日志是否全部读取成功，不表示已读�
 MVC 测试覆盖请求校验和 JSON 绑定；启动测试验证 Spring 配置可装配。
 凭据构建测试只构造和关闭 SDK 客户端，不发送请求。不会自动创建、提交或发布任何云端文件。
 
+### Spring Boot 真实环境测试
+
+`DksdkDemoApplicationTests` 使用 `@SpringBootTest(webEnvironment = NONE)` 启动完整 Spring 容器，
+自动注入 `DataWorksController`，可直接运行创建、提交、状态查询、发布和日志查询方法。
+默认执行 `mvn test` 时，所有真实云端调用都会跳过；必须显式开启，防止误操作云端资源。
+
+先配置凭据和项目：
+
+```powershell
+$env:ALIBABA_CLOUD_ACCESS_KEY_ID = "实际 AccessKey ID"
+$env:ALIBABA_CLOUD_ACCESS_KEY_SECRET = "实际 AccessKey Secret"
+$env:DATAWORKS_PROJECT_ID = "10000"
+```
+
+只读查询发布包状态：
+
+```powershell
+mvn '-Dtest=DksdkDemoApplicationTests#deploymentStatusTest' `
+  '-Ddataworks.live-test.enabled=true' `
+  '-Ddataworks.live-test.deployment-id=3000001' test
+```
+
+创建脚本等写操作需要额外开启 `allow-writes`：
+
+```powershell
+mvn '-Dtest=DksdkDemoApplicationTests#createScriptTest' `
+  '-Ddataworks.live-test.enabled=true' `
+  '-Ddataworks.live-test.allow-writes=true' test
+```
+
+提交和发布用例还需传入 `dataworks.live-test.file-id`、
+`dataworks.live-test.deployment-id`。日志查询优先使用 `dataworks.live-test.instance-id`；
+没有实例 ID 时传 `dataworks.live-test.task-id` 和 `dataworks.live-test.bizdate=yyyy-MM-dd`。
+
 ## 官方接口说明
 
 - [GetDeploymentPackage](https://help.aliyun.com/zh/dataworks/developer-reference/api-dataworks-public-2024-05-18-getdeploymentpackage)

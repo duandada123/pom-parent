@@ -14,11 +14,11 @@ import java.util.List;
 @Setter
 public class QueryLogsResponse {
 
-    @ApiModelProperty(value = "调度任务 ID", example = "2000001")
+    @ApiModelProperty(value = "调度节点 ID（兼容字段名 taskId）", example = "2000001")
     private Long taskId;
 
-    @ApiModelProperty(value = "数据开发节点 ID（String），不是调度任务 taskId；按文件名查询时返回", example = "authoring-node-id")
-    private String nodeId;
+    @ApiModelProperty(value = "调度节点 ID；按文件名查询时返回", example = "2000001")
+    private Long nodeId;
 
     @ApiModelProperty(value = "符合条件的实例总数", example = "30")
     private Integer totalCount;

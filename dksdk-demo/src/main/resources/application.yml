@@ -9,11 +9,11 @@ server:
   port: ${SERVER_PORT:8080}
 
 dataworks:
-  endpoint: ${DATAWORKS_ENDPOINT:}
-  region-id: ${DATAWORKS_REGION_ID:cn-hangzhou}
+  endpoint: "dataworks-public.res.sgmc.sgcc.com.cn"
+  region-id: "default"
   project-id: ${DATAWORKS_PROJECT_ID:0}
-  access-key-id: ${ALIBABA_CLOUD_ACCESS_KEY_ID:}
-  access-key-secret: ${ALIBABA_CLOUD_ACCESS_KEY_SECRET:}
+  access-key-id: "L3tM4dU9yuivnh93"
+  access-key-secret: "0bMFoVjmd3SEsaaIVIV6UMs4O5odQ6"
   security-token: ${ALIBABA_CLOUD_SECURITY_TOKEN:}
   bizdate-zone: Asia/Shanghai
   call-timeout-seconds: 20

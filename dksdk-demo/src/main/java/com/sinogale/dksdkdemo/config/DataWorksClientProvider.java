@@ -1,53 +1,53 @@
 package com.sinogale.dksdkdemo.config;
 
-import com.aliyun.auth.credentials.Credential;
-import com.aliyun.auth.credentials.provider.StaticCredentialProvider;
-import com.aliyun.sdk.service.dataworks_public20240518.AsyncClient;
+import com.aliyun.dataworks_20240902.Client;
+import com.aliyun.teaopenapi.models.Config;
 import com.sinogale.dksdkdemo.exception.DataWorksException;
-import darabonba.core.client.ClientOverrideConfiguration;
-import darabonba.core.policy.retry.RetryPolicy;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import javax.annotation.PreDestroy;
-import java.time.Duration;
 
+/** DataWorks 20240902 同步客户端的延迟初始化与复用。 */
 @Component
 public class DataWorksClientProvider {
     private final DataWorksProperties properties;
-    private AsyncClient client;
+    private Client client;
 
-    public DataWorksClientProvider(DataWorksProperties properties) { this.properties = properties; }
+    public DataWorksClientProvider(DataWorksProperties properties) {
+        this.properties = properties;
+    }
 
-    // 单例连接复用；延迟初始化，未配置凭据时仍可启动应用、执行本地测试。
-    public synchronized AsyncClient getClient() {
+    public synchronized Client getClient() {
         if (client == null) {
-            if (!StringUtils.hasText(properties.getAccessKeyId())
-                    || !StringUtils.hasText(properties.getAccessKeySecret())
-                    || !StringUtils.hasText(properties.getRegionId())) {
-                throw new DataWorksException(503, "DATAWORKS_NOT_CONFIGURED",
-                        "请配置 DataWorks region-id、access-key-id、access-key-secret", null);
+            validateConfiguration();
+            Config config = new Config()
+                    .setAccessKeyId(properties.getAccessKeyId())
+                    .setAccessKeySecret(properties.getAccessKeySecret())
+                    .setRegionId(properties.getRegionId())
+                    .setProtocol("HTTPS")
+                    .setConnectTimeout(5000)
+                    .setReadTimeout(properties.getCallTimeoutSeconds() * 1000);
+            if (StringUtils.hasText(properties.getSecurityToken())) {
+                config.setSecurityToken(properties.getSecurityToken());
             }
-            Credential credential = Credential.builder().accessKeyId(properties.getAccessKeyId())
-                    .accessKeySecret(properties.getAccessKeySecret())
-                    .securityToken(StringUtils.hasText(properties.getSecurityToken())
-                            ? properties.getSecurityToken() : null).build();
-            ClientOverrideConfiguration config = ClientOverrideConfiguration.create()
-                    .setConnectTimeout(Duration.ofSeconds(5))
-                    .setResponseTimeout(Duration.ofSeconds(properties.getCallTimeoutSeconds()))
-                    // 写接口无幂等令牌，超时后不自动重试，以免重复创建/发布。
-                    .setRetryPolicy(RetryPolicy.none()).setProtocol("HTTPS");
             if (StringUtils.hasText(properties.getEndpoint())) {
-                config.setEndpointOverride(properties.getEndpoint());
+                config.setEndpoint(properties.getEndpoint());
             }
-            client = AsyncClient.builder().region(properties.getRegionId())
-                    .credentialsProvider(StaticCredentialProvider.create(credential))
-                    .overrideConfiguration(config).build();
+            try {
+                client = new Client(config);
+            } catch (Exception e) {
+                throw new DataWorksException(503, "DATAWORKS_CLIENT_INIT_FAILED",
+                        "DataWorks 客户端初始化失败，请检查地域、Endpoint 和凭据配置", null);
+            }
         }
         return client;
     }
 
-    @PreDestroy
-    public synchronized void close() {
-        if (client != null) { client.close(); client = null; }
+    private void validateConfiguration() {
+        if (!StringUtils.hasText(properties.getAccessKeyId())
+                || !StringUtils.hasText(properties.getAccessKeySecret())
+                || !StringUtils.hasText(properties.getRegionId())) {
+            throw new DataWorksException(503, "DATAWORKS_NOT_CONFIGURED",
+                    "请配置 DataWorks region-id、access-key-id、access-key-secret", null);
+        }
     }
 }

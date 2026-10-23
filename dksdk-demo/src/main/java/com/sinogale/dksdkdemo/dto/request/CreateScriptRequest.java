@@ -37,7 +37,7 @@ public class CreateScriptRequest {
     @ApiModelProperty(value = "节点上游输入依赖，按 DataWorks 格式填写")
     private String inputList;
 
-    @ApiModelProperty(value = "节点输出依赖，按 DataWorks 格式填写")
+    @ApiModelProperty(value = "兼容旧接口；20240902 SDK 的 CreateFile 不再提供 outputList 参数")
     private String outputList;
 
     @ApiModelProperty(value = "调度参数，多个参数用空格分隔", example = "bizdate=$bizdate")
@@ -58,7 +58,7 @@ public class CreateScriptRequest {
     @ApiModelProperty(value = "调度资源组 ID", example = "12345")
     private Long resourceGroupId;
 
-    @ApiModelProperty(value = "目录不存在时是否自动创建，默认 false", example = "false")
+    @ApiModelProperty(value = "兼容旧接口；20240902 SDK 的 CreateFile 不再提供自动建目录参数", example = "false")
     private Boolean createFolderIfNotExists = false;
 
     @ApiModelProperty(value = "是否由 DataWorks 自动解析代码依赖", example = "true")
