@@ -1,5 +1,12 @@
 # dksdk
 
+> 当前提供纯 Service 调用入口 `DataWorksScriptService`，不再提供 Controller 或 Swagger 页面。
+> Java 8、无公司 parent、普通 JAR；调用方式和测试入口以 [Service 使用说明](docs/Service使用说明.md) 为准。
+> 以下早期 HTTP 接口、启动打包及 SDK 版本说明仅作历史参考，不适用于当前交付方式。
+
+> 当前代码使用公司 SDK `com.aliyun.dataworks:dataworks_public_20240902:4.2.5`。
+> 本次局部修正见 [优化说明](docs/优化说明.md)，保留原方法、接口参数和全量分页逻辑。下文是早期 demo 文档，部分内容与当前代码有差异。
+
 Java 8 / Spring Boot 2.1.14，使用指定依赖 `com.aliyun:alibabacloud-dataworks_public20240518:9.0.11`。
 实际目录为 `D:\work\ph\pom-parent\dksdk`，父 POM 路径为 `../pom.xml`。
 下面示例中的项目、目录、文件和实例 ID 都是占位示例，需替换成实际值。
@@ -75,7 +82,7 @@ docs/swagger.json 是本次从运行中的 /v2/api-docs 导出的 Swagger 2.0 �
 
 ## 四个接口
 
-均为 POST，Content-Type: application/json。请求与响应对象位于 dto/request 和 dto/response。
+均为 POST，Content-Type: application/json。请求与响应对象位于 dto 和 dto/response。
 接口类为 controller/DataWorksController.java，文件编排与日志查询分别在 service 下，
 SDK 调用集中在 sdk/DataWorksGateway.java，客户端与外部配置位于 config 下。
 

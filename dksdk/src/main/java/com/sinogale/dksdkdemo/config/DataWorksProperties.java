@@ -18,5 +18,5 @@ public class DataWorksProperties {
     private String bizdateZone;
     private int callTimeoutSeconds;
     private int maxNodePages;
-    private String projectEnv;
+    private String projectEnv = "PROD";
 }
