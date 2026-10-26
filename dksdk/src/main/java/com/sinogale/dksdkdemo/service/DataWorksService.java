@@ -63,6 +63,7 @@ public class DataWorksService {
         validateDto(request);
         Map<String, Object> params = new HashMap<>();
         params.put("ProjectId", properties.getProjectId());
+        params.put("RegionId", properties.getRegionId());
         params.put("FileId", request.getFileId());
         Map<String, Object> result = dataWorksSdkInvoker.executeFunction("SubmitFile", params);
         SubmitFileResponse response = requireResponse(result, SubmitFileResponse.class, "提交脚本");
@@ -119,6 +120,7 @@ public class DataWorksService {
     public GetDeploymentResponse getDeployment(Long deploymentId) {
         Map<String, Object> params = new HashMap<>();
         params.put("ProjectId", properties.getProjectId());
+        params.put("RegionId", properties.getRegionId());
         params.put("DeploymentId", deploymentId);
 
         Map<String, Object> result = dataWorksSdkInvoker.executeFunction("GetDeployment", params);
@@ -136,6 +138,7 @@ public class DataWorksService {
     public DeployFileResponse deployFile(Long fileId, Long nodeId) {
         Map<String, Object> params = new HashMap<>();
         params.put("ProjectId", properties.getProjectId());
+        params.put("RegionId", properties.getRegionId());
         if (null != fileId) {
             params.put("FileId", fileId);
         }
@@ -544,6 +547,7 @@ public class DataWorksService {
     private Map<String, Object> createFileParams(CreateScriptRequest request) {
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("ProjectId", properties.getProjectId());
+        params.put("RegionId", properties.getRegionId());
         params.put("FileName", request.getFileName());
         params.put("FileType", request.getFileType());
         params.put("FileFolderPath", request.getFileFolderPath());
