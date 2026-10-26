@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import com.aliyun.dataworks_20240902.Client;
-
-import com.aliyun.dataworks_20240902.Client;
 import com.aliyun.dataworks_20240902.models.*;
 import com.aliyun.tea.TeaModel;
 import org.springframework.stereotype.Service;
@@ -56,8 +54,19 @@ public class DataWorksSdkInvoker {
             result.put("response", response);
             result.put("requestId", extractRequestId(response));
         } catch (InvocationTargetException e) {
+            Throwable target = e.getTargetException();
             result.put("success", false);
-            result.put("errorMessage", "执行请求失败: " + e.getTargetException().getMessage());
+            result.put("errorMessage", "执行请求失败: " + target.getMessage());
+            Object errorCode = invokeNoArg(target, "getCode");
+            Object requestId = invokeNoArg(target, "getRequestId");
+            Object errorData = invokeNoArg(target, "getData");
+            if (errorData instanceof Map) {
+                Map<?, ?> data = (Map<?, ?>) errorData;
+                if (requestId == null) requestId = firstNotNull(data.get("RequestId"), data.get("requestId"));
+                if (errorCode == null) errorCode = firstNotNull(data.get("Code"), data.get("code"));
+            }
+            if (errorCode != null) result.put("errCode", errorCode);
+            if (requestId != null) result.put("requestId", requestId);
         } catch (ReflectiveOperationException e) {
             result.put("success", false);
             result.put("errorMessage", "SDK 方法或参数不匹配: " + e.getMessage());
@@ -73,7 +82,6 @@ public class DataWorksSdkInvoker {
         }
         return result;
     }
-
 
     /**
      * 处理请求参数，包括 NodeParams 的特殊处理
@@ -142,6 +150,19 @@ public class DataWorksSdkInvoker {
         } catch (Exception e) {
             return "unknown";
         }
+    }
+
+    private Object invokeNoArg(Object target, String methodName) {
+        if (target == null) return null;
+        try {
+            return target.getClass().getMethod(methodName).invoke(target);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    private Object firstNotNull(Object first, Object second) {
+        return first == null ? second : first;
     }
 
 
